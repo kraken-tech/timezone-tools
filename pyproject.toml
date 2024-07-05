@@ -26,7 +26,6 @@ requires-python = ">=3.10"
 dependencies = [  # pragma: alphabetize
   "django<5.0",
   "python-dateutil",
-  "xocto",
 ]
 classifiers = [  # pragma: alphabetize
   "License :: OSI Approved :: BSD License",

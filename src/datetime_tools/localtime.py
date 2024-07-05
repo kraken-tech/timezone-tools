@@ -4,11 +4,11 @@ import datetime as datetime_
 import decimal
 import zoneinfo
 from collections.abc import Generator, Sequence
+from typing import Protocol
 
 from dateutil import tz
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
-from xocto import numbers, ranges
 
 # Timezone aware datetime in the far future.
 far_future = timezone.make_aware(
@@ -450,12 +450,14 @@ def quantise(
 
     """
     # We simply convert the datetime we want to quantise into a timestamp and
-    # use `numbers.quantise()` to quantise it, with the 'seconds' from the
-    # timedelta argument as our base.
+    # quantise it.
     timedelta_seconds = timedelta.days * 24 * 60 * 60 + timedelta.seconds
     dt_as_timestamp = dt.timestamp()
-    quantised_dt_timestamp = numbers.quantise(
-        dt_as_timestamp, timedelta_seconds, rounding=rounding
+    quantised_dt_timestamp = int(
+        timedelta_seconds
+        * (decimal.Decimal(dt_as_timestamp) / timedelta_seconds).quantize(
+            decimal.Decimal("1."), rounding=rounding
+        )
     )
     quantised_dt = datetime_.datetime.fromtimestamp(
         quantised_dt_timestamp, tz=dt.tzinfo
@@ -597,19 +599,19 @@ def latest_date_for_day(
     """
     if not (1 <= day_of_month <= 31):
         raise ValueError(f"{day_of_month} is not a valid day of the month.")
-
-    date_range: ranges.FiniteRange[datetime_.date] = ranges.FiniteRange(
-        start_date, end_date, boundaries="[]"
-    )
+    if not start_date < end_date:
+        raise ValueError
 
     # Begin with a date in the same month as the end date.
     # (This will not necessarily be in range.)
-    candidate_date = date_range.end + relativedelta(day=day_of_month)
+    candidate_date = end_date + relativedelta(day=day_of_month)
 
     # Work our way backwards from the end date until we find a suitable date.
-    while candidate_date >= date_range.start:
-        if candidate_date.day == day_of_month and candidate_date in date_range:
-            return candidate_date  # type: ignore[no-any-return]
+    while candidate_date >= start_date:
+        if candidate_date.day == day_of_month and (
+            start_date <= candidate_date <= end_date
+        ):
+            return candidate_date
         candidate_date -= relativedelta(months=1, day=day_of_month)
     return None
 
@@ -699,8 +701,13 @@ def is_localtime_midnight(
     return as_localtime(dt, tz).time() == datetime_.time(0)
 
 
+class DatetimeRange(Protocol):
+    start: datetime_.datetime
+    end: datetime_.datetime
+
+
 def is_aligned_to_midnight(
-    range: ranges.FiniteDatetimeRange, tz: datetime_.tzinfo | None = None
+    range: DatetimeRange, tz: datetime_.tzinfo | None = None
 ) -> bool:  # pragma: no cover
     """
     Return whether this range is aligned to localtime midnight.
