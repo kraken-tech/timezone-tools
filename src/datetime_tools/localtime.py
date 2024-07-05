@@ -8,7 +8,7 @@ from collections.abc import Generator, Sequence
 from dateutil import tz
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
-from xocto import numbers, ranges
+from xocto import ranges
 
 # Timezone aware datetime in the far future.
 far_future = timezone.make_aware(
@@ -450,12 +450,14 @@ def quantise(
 
     """
     # We simply convert the datetime we want to quantise into a timestamp and
-    # use `numbers.quantise()` to quantise it, with the 'seconds' from the
-    # timedelta argument as our base.
+    # quantise it.
     timedelta_seconds = timedelta.days * 24 * 60 * 60 + timedelta.seconds
     dt_as_timestamp = dt.timestamp()
-    quantised_dt_timestamp = numbers.quantise(
-        dt_as_timestamp, timedelta_seconds, rounding=rounding
+    quantised_dt_timestamp = int(
+        timedelta_seconds
+        * (decimal.Decimal(dt_as_timestamp) / timedelta_seconds).quantize(
+            decimal.Decimal("1."), rounding=rounding
+        )
     )
     quantised_dt = datetime_.datetime.fromtimestamp(
         quantised_dt_timestamp, tz=dt.tzinfo
