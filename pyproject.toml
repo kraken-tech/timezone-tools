@@ -23,7 +23,11 @@ description = "Tools for working with timezone-aware datetimes."
 license.file = "LICENSE"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [  # pragma: alphabetize
+  "django<5.0",
+  "python-dateutil",
+  "xocto",
+]
 classifiers = [  # pragma: alphabetize
   "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent",
@@ -45,6 +49,7 @@ dev = [  # pragma: alphabetize
   "coverage",
   "pre-commit",
   "pytest",
+  "time_machine",
   "tox",
   "tox-uv",
   "uv",
@@ -94,13 +99,41 @@ strict = true
 warn_unreachable = true
 warn_no_return = true
 
+plugins = [
+    "mypy_django_plugin.main",
+]
+
+[tool.django-stubs]
+django_settings_module = "tests.settings"
+
 
 # Pytest
 # ------
 
 [tool.pytest.ini_options]
 # Ensure error warnings are converted into test errors.
-filterwarnings = "error"
+filterwarnings = [
+  "error",
+  "ignore:datetime.datetime.utcfromtimestamp\\(\\) is deprecated:DeprecationWarning",
+  "ignore:The django.utils.timezone.utc alias is deprecated:django.utils.deprecation.RemovedInDjango50Warning",
+]
 
 # Ensure that tests fail if an xfail test unexpectedly passes.
 xfail_strict = true
+
+
+# Coverage
+# --------
+
+[tool.coverage.run]
+source = [
+  "datetime_tools",
+  "tests",
+]
+plugins = ["covdefaults"]
+
+[tool.coverage.paths]
+source = [
+  "src",
+  ".tox/py*/**/site-packages",
+]
