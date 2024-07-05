@@ -46,6 +46,7 @@ dev = [  # pragma: alphabetize
   "pre-commit",
   "pytest",
   "tox",
+  "tox-uv",
   "uv",
 ]
 

@@ -31,6 +31,7 @@ packaging==24.1
     #   pyproject-api
     #   pytest
     #   tox
+    #   tox-uv
 platformdirs==4.2.2
     # via
     #   tox
@@ -48,9 +49,15 @@ pytest==8.2.2
 pyyaml==6.0.1
     # via pre-commit
 tox==4.16.0
+    # via
+    #   datetime-tools (pyproject.toml)
+    #   tox-uv
+tox-uv==1.9.1
     # via datetime-tools (pyproject.toml)
 uv==0.2.21
-    # via datetime-tools (pyproject.toml)
+    # via
+    #   datetime-tools (pyproject.toml)
+    #   tox-uv
 virtualenv==20.26.3
     # via
     #   pre-commit
