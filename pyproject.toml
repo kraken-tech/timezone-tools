@@ -110,4 +110,14 @@ xfail_strict = true
 # --------
 
 [tool.coverage.run]
+source = [
+  "datetime_tools",
+  "tests",
+]
 plugins = ["covdefaults"]
+
+[tool.coverage.paths]
+source = [
+  "src",
+  ".tox/py*/**/site-packages",
+]
