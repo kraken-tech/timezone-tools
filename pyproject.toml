@@ -43,10 +43,11 @@ Changelog = "https://github.com/octoenergy/datetime-tools/blob/main/CHANGELOG.md
 dev = [  # pragma: alphabetize
   "covdefaults",
   "coverage",
-  "nox",
   "pre-commit",
   "pytest",
-  "uv"
+  "tox",
+  "tox-uv",
+  "uv",
 ]
 
 

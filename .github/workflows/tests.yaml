@@ -28,5 +28,5 @@ jobs:
           pyproject.toml
           requirements.txt
           tox.ini
-    - run: pip install tox
+    - run: pip install -c requirements.txt tox tox-uv
     - run: tox -e py
