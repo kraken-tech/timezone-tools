@@ -1,0 +1,105 @@
+# Packaging
+# ---------
+
+[build-system]
+requires = ["setuptools>=67.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# This is the default but we include it to be explicit.
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+# Project
+# -------
+
+[project]
+name = "datetime_tools"
+version = "0.0.0"
+description = "Tools for working with timezone-aware datetimes."
+license.file = "LICENSE"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+classifiers = [  # pragma: alphabetize
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
+]
+
+[project.urls]
+Source = "https://github.com/octoenergy/datetime-tools"
+Changelog = "https://github.com/octoenergy/datetime-tools/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+dev = [  # pragma: alphabetize
+  "covdefaults",
+  "coverage",
+  "nox",
+  "pre-commit",
+  "pytest",
+  "uv"
+]
+
+
+# Ruff
+# ----
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+select = [  # pragma: alphabetize
+  "B",  # flake8-bugbear
+  "C4",  # flake8-comprehensions
+  "E",  # pycodestyle
+  "F",  # pyflakes
+  "G",  # flake8-logging-format
+  "I",  # isort
+  "INP",  # implicit namespace packages
+  "PERF",  # Perflint
+  "PGH",  # pygrep-hooks
+  "Q",  # quotes
+  "RSE", # flake8-raise
+  "RUF",
+  "T10",  # flake8-debugger
+  "UP",  # pyupgrade
+  "W",  # pycodestyle
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["datetime_tools"]
+
+# Mypy
+# ----
+
+[tool.mypy]
+files = "."
+exclude = "build/"
+
+# Use strict defaults
+enable_error_code = [
+  "truthy-bool",
+]
+strict = true
+warn_unreachable = true
+warn_no_return = true
+
+
+# Pytest
+# ------
+
+[tool.pytest.ini_options]
+# Ensure error warnings are converted into test errors.
+filterwarnings = "error"
+
+# Ensure that tests fail if an xfail test unexpectedly passes.
+xfail_strict = true
