@@ -104,3 +104,10 @@ filterwarnings = "error"
 
 # Ensure that tests fail if an xfail test unexpectedly passes.
 xfail_strict = true
+
+
+# Coverage
+# --------
+
+[tool.coverage.run]
+plugins = ["covdefaults"]
