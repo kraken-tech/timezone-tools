@@ -5,7 +5,8 @@ from typing import Any
 from dateutil import parser as date_parser
 from dateutil import relativedelta
 from django.utils import timezone
-from xocto import localtime
+
+from datetime_tools import localtime
 
 
 class DateTimeFactory:
