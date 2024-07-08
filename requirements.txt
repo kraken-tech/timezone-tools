@@ -20,7 +20,7 @@ filelock==3.15.4
     # via
     #   tox
     #   virtualenv
-identify==2.5.36
+identify==2.6.0
     # via pre-commit
 iniconfig==2.0.0
     # via pytest
