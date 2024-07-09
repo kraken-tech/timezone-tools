@@ -24,6 +24,7 @@ license.file = "LICENSE"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+  "python-dateutil",
   "typing_extensions",
 ]
 classifiers = [  # pragma: alphabetize

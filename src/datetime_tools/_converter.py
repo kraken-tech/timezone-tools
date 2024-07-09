@@ -2,6 +2,7 @@ import datetime as datetime_
 import zoneinfo
 from typing import Literal
 
+from dateutil import relativedelta
 from typing_extensions import assert_never
 
 
@@ -152,3 +153,149 @@ class TimezoneConverter:
             return upper_candidate
         else:  # pragma: no cover
             assert_never(rounding)
+
+    # Relative dates and times
+
+    def day_before(
+        self, when: datetime_.datetime | datetime_.date
+    ) -> datetime_.date:
+        """Find the date of the day before this moment in this timezone.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        if isinstance(when, datetime_.datetime):
+            date = self.date(when)
+        else:
+            date = when
+
+        return date - datetime_.timedelta(days=1)
+
+    def day_after(
+        self, when: datetime_.datetime | datetime_.date
+    ) -> datetime_.date:
+        """Find the date of the day after this moment in this timezone.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        if isinstance(when, datetime_.datetime):
+            date = self.date(when)
+        else:
+            date = when
+
+        return date + datetime_.timedelta(days=1)
+
+    def midnight(
+        self, when: datetime_.datetime | datetime_.date
+    ) -> datetime_.datetime:
+        """Find the moment of midnight on this day in this timezone.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        if isinstance(when, datetime_.datetime):
+            date = self.date(when)
+        else:
+            date = when
+
+        return self.combine(date, datetime_.time(00, 00))
+
+    def midday(
+        self, when: datetime_.datetime | datetime_.date
+    ) -> datetime_.datetime:
+        """Find the moment of midday on this day in this timezone.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        if isinstance(when, datetime_.datetime):
+            date = self.date(when)
+        else:
+            date = when
+
+        return self.combine(date, datetime_.time(12, 00))
+
+    def next_midnight(
+        self, when: datetime_.datetime | datetime_.date
+    ) -> datetime_.datetime:
+        """Find the moment of midnight at the end of this day in this timezone.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        return self.midnight(self.day_after(when))
+
+    def start_of_month(
+        self, datetime: datetime_.datetime
+    ) -> datetime_.datetime:
+        """Find the moment of the start of this month in this timezone.
+
+        This will be midnight on the first day of the month.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        return self.midnight(self.first_day_of_month(datetime))
+
+    def end_of_month(self, datetime: datetime_.datetime) -> datetime_.datetime:
+        """Find the moment of the end of this month in this timezone.
+
+        This will be midnight on the first day of the following month.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        return self.start_of_month(datetime) + relativedelta.relativedelta(
+            months=1
+        )
+
+    def first_day_of_month(
+        self, datetime: datetime_.datetime
+    ) -> datetime_.date:
+        """Find the date of the first day of this month in this timezone.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        return self.date(datetime).replace(day=1)
+
+    def last_day_of_month(
+        self, datetime: datetime_.datetime
+    ) -> datetime_.date:
+        """Find the date of the last day of this month in this timezone.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        return self.first_day_of_month(datetime) + relativedelta.relativedelta(
+            months=1, days=-1
+        )
+
+    def is_midnight(self, datetime: datetime_.datetime) -> bool:
+        """Check whether a time is midnight in this timezone.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        return self.localize(datetime).time() == datetime_.time(00, 00)

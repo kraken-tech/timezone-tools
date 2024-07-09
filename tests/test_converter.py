@@ -317,3 +317,381 @@ def test_quantize_requires_aware_datetime() -> None:
             datetime.timedelta(minutes=1),
             rounding=paris_time.ROUND_DOWN,
         )
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param(
+            # 9th in Paris
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone",
+        ),
+        pytest.param(
+            # 8th in London; 9th in Paris
+            datetime.datetime(
+                2024, 7, 8, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            id="different timezone",
+        ),
+        pytest.param(
+            datetime.date(2024, 7, 9),
+            id="date",
+        ),
+    ),
+)
+def test_day_before(when: datetime.date | datetime.datetime) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.day_before(when) == datetime.date(2024, 7, 8)
+
+
+def test_day_before_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.day_before(naive_datetime)
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param(
+            # 9th in Paris
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone",
+        ),
+        pytest.param(
+            # 8th in London; 9th in Paris
+            datetime.datetime(
+                2024, 7, 8, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            id="different timezone",
+        ),
+        pytest.param(
+            datetime.date(2024, 7, 9),
+            id="date",
+        ),
+    ),
+)
+def test_day_after(when: datetime.date | datetime.datetime) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.day_after(when) == datetime.date(2024, 7, 10)
+
+
+def test_day_after_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.day_after(naive_datetime)
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param(
+            # 9th in Paris
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone",
+        ),
+        pytest.param(
+            # 8th in London; 9th in Paris
+            datetime.datetime(
+                2024, 7, 8, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            id="different timezone",
+        ),
+        pytest.param(
+            datetime.date(2024, 7, 9),
+            id="date",
+        ),
+    ),
+)
+def test_midnight(when: datetime.date | datetime.datetime) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.midnight(when) == datetime.datetime(
+        2024, 7, 9, 00, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+    )
+
+
+def test_midnight_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.midnight(naive_datetime)
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param(
+            # 9th in Paris
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone",
+        ),
+        pytest.param(
+            # 8th in London; 9th in Paris
+            datetime.datetime(
+                2024, 7, 8, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            id="different timezone",
+        ),
+        pytest.param(
+            datetime.date(2024, 7, 9),
+            id="date",
+        ),
+    ),
+)
+def test_midday(when: datetime.date | datetime.datetime) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.midday(when) == datetime.datetime(
+        2024, 7, 9, 12, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+    )
+
+
+def test_midday_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.midday(naive_datetime)
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param(
+            # 9th in Paris
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone",
+        ),
+        pytest.param(
+            # 8th in London; 9th in Paris
+            datetime.datetime(
+                2024, 7, 8, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            id="different timezone",
+        ),
+        pytest.param(
+            datetime.date(2024, 7, 9),
+            id="date",
+        ),
+    ),
+)
+def test_next_midnight(when: datetime.date | datetime.datetime) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.next_midnight(when) == datetime.datetime(
+        2024, 7, 10, 00, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+    )
+
+
+def test_next_midnight_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.next_midnight(naive_datetime)
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param(
+            # July in Paris
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone",
+        ),
+        pytest.param(
+            # June in London; July in Paris
+            datetime.datetime(
+                2024, 6, 30, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            id="different timezone",
+        ),
+    ),
+)
+def test_start_of_month(when: datetime.datetime) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.start_of_month(when) == datetime.datetime(
+        2024, 7, 1, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+    )
+
+
+def test_start_of_month_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.start_of_month(naive_datetime)
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param(
+            # July in Paris
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone",
+        ),
+        pytest.param(
+            # June in London; July in Paris
+            datetime.datetime(
+                2024, 6, 30, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            id="different timezone",
+        ),
+    ),
+)
+def test_end_of_month(when: datetime.datetime) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.end_of_month(when) == datetime.datetime(
+        2024, 8, 1, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+    )
+
+
+def test_end_of_month_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.end_of_month(naive_datetime)
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param(
+            # July in Paris
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone",
+        ),
+        pytest.param(
+            # June in London; July in Paris
+            datetime.datetime(
+                2024, 6, 30, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            id="different timezone",
+        ),
+    ),
+)
+def test_first_day_of_month(when: datetime.datetime) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.first_day_of_month(when) == datetime.date(2024, 7, 1)
+
+
+def test_first_day_of_month_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.first_day_of_month(naive_datetime)
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param(
+            # July in Paris
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone",
+        ),
+        pytest.param(
+            # June in London; July in Paris
+            datetime.datetime(
+                2024, 6, 30, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            id="different timezone",
+        ),
+    ),
+)
+def test_last_day_of_month(when: datetime.datetime) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.last_day_of_month(when) == datetime.date(2024, 7, 31)
+
+
+def test_last_day_of_month_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.last_day_of_month(naive_datetime)
+
+
+@pytest.mark.parametrize(
+    "when, is_midnight",
+    (
+        pytest.param(
+            # midnight in Paris
+            datetime.datetime(
+                2024, 7, 9, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            True,
+            id="midnight same timezone",
+        ),
+        pytest.param(
+            # 11pm in London; midnight in Paris
+            datetime.datetime(
+                2024, 6, 30, 23, 00, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            True,
+            id="midnight different timezone",
+        ),
+        pytest.param(
+            # 1am in Paris
+            datetime.datetime(
+                2024, 7, 9, 1, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            False,
+            id="midnight same timezone",
+        ),
+        pytest.param(
+            # midnight in London; 1am in Paris
+            datetime.datetime(
+                2024, 6, 30, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            False,
+            id="midnight different timezone",
+        ),
+    ),
+)
+def test_is_midnight(when: datetime.datetime, is_midnight: bool) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.is_midnight(when) is is_midnight
+
+
+def test_is_midnight_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.is_midnight(naive_datetime)
