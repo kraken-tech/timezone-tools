@@ -1,5 +1,6 @@
 import datetime
 import zoneinfo
+from typing import Literal
 
 import pytest
 
@@ -134,3 +135,185 @@ def test_date_requires_aware_datetime() -> None:
 
     with pytest.raises(paris_time.NaiveDatetime):
         paris_time.date(naive_datetime)
+
+
+_half_hour = datetime.timedelta(minutes=30)
+_two_hours = datetime.timedelta(hours=2)
+_day = datetime.timedelta(days=1)
+
+
+@pytest.mark.parametrize(
+    "initial_datetime, resolution, rounding, expected_result",
+    (
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            _half_hour,
+            TimezoneConverter.ROUND_DOWN,
+            datetime.datetime(
+                2024, 7, 9, 12, 30, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone, round down 1/2 hour",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            _half_hour,
+            TimezoneConverter.ROUND_UP,
+            datetime.datetime(
+                2024, 7, 9, 13, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone, round up 1/2 hour",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 13, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            _two_hours,
+            TimezoneConverter.ROUND_DOWN,
+            datetime.datetime(
+                2024, 7, 9, 12, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone, round down 2 hours",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 13, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            _two_hours,
+            TimezoneConverter.ROUND_UP,
+            datetime.datetime(
+                2024, 7, 9, 14, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone, round up 2 hours",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 13, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            _day,
+            TimezoneConverter.ROUND_DOWN,
+            datetime.datetime(
+                2024, 7, 9, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone, round down 1 day",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 13, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            _day,
+            TimezoneConverter.ROUND_UP,
+            datetime.datetime(
+                2024, 7, 10, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="same timezone, round up 1 day",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            _half_hour,
+            TimezoneConverter.ROUND_DOWN,
+            datetime.datetime(
+                2024, 7, 9, 13, 30, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="different timezone, round down 1/2 hour",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            _half_hour,
+            TimezoneConverter.ROUND_UP,
+            datetime.datetime(
+                2024, 7, 9, 14, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="different timezone, round up 1/2 hour",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            _two_hours,
+            TimezoneConverter.ROUND_DOWN,
+            datetime.datetime(
+                2024, 7, 9, 12, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="different timezone, round down 2 hours",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 13, 45, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            _two_hours,
+            TimezoneConverter.ROUND_UP,
+            datetime.datetime(
+                2024, 7, 9, 16, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="different timezone, round up 2 hours",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            _day,
+            TimezoneConverter.ROUND_DOWN,
+            datetime.datetime(
+                2024, 7, 10, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="different timezone, round down 1 day",
+        ),
+        pytest.param(
+            datetime.datetime(
+                2024, 7, 9, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+            ),
+            _day,
+            TimezoneConverter.ROUND_UP,
+            datetime.datetime(
+                2024, 7, 11, 00, 00, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+            ),
+            id="different timezone, round up 1 day",
+        ),
+    ),
+)
+def test_quantize(
+    initial_datetime: datetime.datetime,
+    resolution: datetime.timedelta,
+    rounding: Literal["ROUND_UP", "ROUND_DOWN"],
+    expected_result: datetime.datetime,
+) -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert (
+        paris_time.quantize(initial_datetime, resolution, rounding)
+        == expected_result
+    )
+
+
+def test_quantize_requires_resolution_less_than_a_day() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    some_datetime = datetime.datetime(
+        2024, 7, 9, 12, 45, 0, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+    )
+
+    with pytest.raises(paris_time.ResolutionTooLarge):
+        paris_time.quantize(
+            some_datetime,
+            datetime.timedelta(hours=25),
+            rounding=paris_time.ROUND_DOWN,
+        )
+
+
+def test_quantize_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.quantize(
+            naive_datetime,
+            datetime.timedelta(minutes=1),
+            rounding=paris_time.ROUND_DOWN,
+        )
