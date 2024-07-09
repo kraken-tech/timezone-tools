@@ -55,3 +55,46 @@ class TimezoneConverter:
     @property
     def far_future(self) -> datetime_.datetime:
         return datetime_.datetime.max.replace(tzinfo=self.tzinfo)
+
+    # Conversions
+
+    class AlreadyAware(Exception):
+        pass
+
+    def make_aware(self, datetime: datetime_.datetime) -> datetime_.datetime:
+        """Make a naive datetime timezone-aware in this timezone.
+
+        Raises:
+            AlreadyAware: The datetime is already timezone-aware.
+                Use `localize` to convert the time into this timezone.
+        """
+        if datetime.tzinfo:
+            raise self.AlreadyAware
+
+        return datetime.replace(tzinfo=self.tzinfo)
+
+    class NaiveDatetime(Exception):
+        pass
+
+    def localize(self, datetime: datetime_.datetime) -> datetime_.datetime:
+        """Localize a timezone-aware datetime to this timezone.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        if not datetime.tzinfo:
+            raise self.NaiveDatetime
+
+        return datetime.astimezone(self.tzinfo)
+
+    def date(self, datetime: datetime_.datetime) -> datetime_.date:
+        """Get the date in this timezone at a moment in time.
+
+        Raises:
+            NaiveDatetime: The datetime is naive, so we do not know which
+                timezone to localize from. Use `make_aware` to make a naive
+                datetime timezone-aware.
+        """
+        return self.localize(datetime).date()

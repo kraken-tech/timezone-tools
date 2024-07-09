@@ -1,6 +1,8 @@
 import datetime
 import zoneinfo
 
+import pytest
+
 from datetime_tools import TimezoneConverter
 
 # Note [Use Europe/Paris for tests]
@@ -63,3 +65,72 @@ def test_far_future() -> None:
         999999,
         tzinfo=zoneinfo.ZoneInfo("Europe/Paris"),
     )
+
+
+def test_make_aware() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.make_aware(
+        datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+    ) == datetime.datetime(
+        2024, 7, 9, 12, 45, 0, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+    )
+
+
+def test_make_aware_requires_naive_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    already_aware = datetime.datetime(
+        2024, 7, 9, 12, 45, 0, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+    )
+
+    with pytest.raises(paris_time.AlreadyAware):
+        paris_time.make_aware(already_aware)
+
+
+def test_localize() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.localize(
+        datetime.datetime(
+            2024, 7, 9, 12, 45, 0, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+        )
+    ) == datetime.datetime(
+        2024, 7, 9, 13, 45, 0, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+    )
+
+
+def test_localize_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.localize(naive_datetime)
+
+
+def test_date() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    assert paris_time.date(
+        datetime.datetime(
+            2024, 7, 9, 12, 45, 0, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
+        )
+    ) == datetime.date(2024, 7, 9)
+
+
+def test_date_from_different_timezone() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    # just before midnight in London is after midnight in Paris
+    assert paris_time.date(
+        datetime.datetime(
+            2024, 7, 8, 23, 30, 0, tzinfo=zoneinfo.ZoneInfo("Europe/London")
+        )
+    ) == datetime.date(2024, 7, 9)
+
+
+def test_date_requires_aware_datetime() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+    naive_datetime = datetime.datetime(2024, 7, 9, 12, 45, 0, tzinfo=None)
+
+    with pytest.raises(paris_time.NaiveDatetime):
+        paris_time.date(naive_datetime)
