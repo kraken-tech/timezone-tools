@@ -1,3 +1,3 @@
 """
-TODO Add a description of the package here.
+Tools for working with timezone-aware datetimes.
 """
