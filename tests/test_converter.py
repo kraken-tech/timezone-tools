@@ -1,3 +1,4 @@
+import dataclasses
 import datetime
 import zoneinfo
 from typing import Literal
@@ -12,6 +13,13 @@ from datetime_tools import TimezoneConverter
 # localized times cannot be confused with naive times that have had timezone
 # info added. If a naive time is assumed to be in UTC, it will be different
 # when localized to Europe/Paris, regardless of DST.
+
+
+def test_timezone_cannot_be_changed() -> None:
+    paris_time = TimezoneConverter("Europe/Paris")
+
+    with pytest.raises(dataclasses.FrozenInstanceError):
+        paris_time.tzinfo = zoneinfo.ZoneInfo("Europe/London")  # type: ignore[misc]
 
 
 def test_datetime() -> None:

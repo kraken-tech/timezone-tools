@@ -1,3 +1,4 @@
+import dataclasses
 import datetime
 import zoneinfo
 
@@ -7,6 +8,13 @@ import time_machine
 from datetime_tools import Clock
 
 # See Note [Use Europe/Paris for tests]
+
+
+def test_timezone_cannot_be_changed() -> None:
+    clock = Clock("Europe/Paris")
+
+    with pytest.raises(dataclasses.FrozenInstanceError):
+        clock.tzinfo = zoneinfo.ZoneInfo("Europe/London")  # type: ignore[misc]
 
 
 def test_now() -> None:

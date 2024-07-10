@@ -1,3 +1,4 @@
+import dataclasses
 import datetime as datetime_
 import zoneinfo
 from typing import Literal
@@ -6,11 +7,14 @@ from dateutil import relativedelta
 from typing_extensions import assert_never
 
 
+@dataclasses.dataclass(frozen=True, init=False)
 class TimezoneConverter:
     """Manage dates and datetimes in a specific timezone."""
 
+    tzinfo: zoneinfo.ZoneInfo
+
     def __init__(self, timezone: str) -> None:
-        self.tzinfo = zoneinfo.ZoneInfo(timezone)
+        object.__setattr__(self, "tzinfo", zoneinfo.ZoneInfo(timezone))
 
     # Constructors
 
