@@ -1,14 +1,18 @@
+import dataclasses
 import datetime
 import zoneinfo
 
 from dateutil import relativedelta
 
 
+@dataclasses.dataclass(frozen=True, init=False)
 class Clock:
     """Get the current date/time in a specific timezone."""
 
+    tzinfo: zoneinfo.ZoneInfo
+
     def __init__(self, timezone: str) -> None:
-        self.tzinfo = zoneinfo.ZoneInfo(timezone)
+        object.__setattr__(self, "tzinfo", zoneinfo.ZoneInfo(timezone))
 
     # Current time/date
 
