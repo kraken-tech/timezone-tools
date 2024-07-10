@@ -29,4 +29,4 @@ jobs:
           requirements.txt
           tox.ini
     - run: pip install -c requirements.txt tox tox-uv
-    - run: tox -e py
+    - run: tox run-parallel --parallel-no-spinner
