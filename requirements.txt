@@ -46,8 +46,16 @@ pyproject-api==1.7.1
     # via tox
 pytest==8.2.2
     # via datetime-tools (pyproject.toml)
+python-dateutil==2.9.0.post0
+    # via
+    #   datetime-tools (pyproject.toml)
+    #   time-machine
 pyyaml==6.0.1
     # via pre-commit
+six==1.16.0
+    # via python-dateutil
+time-machine==2.14.2
+    # via datetime-tools (pyproject.toml)
 tox==4.16.0
     # via
     #   datetime-tools (pyproject.toml)

@@ -48,6 +48,7 @@ dev = [  # pragma: alphabetize
   "coverage",
   "pre-commit",
   "pytest",
+  "time-machine",
   "tox",
   "tox-uv",
   "uv",
