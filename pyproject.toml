@@ -23,7 +23,10 @@ description = "Tools for working with timezone-aware datetimes."
 license.file = "LICENSE"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+  "python-dateutil",
+  "typing_extensions",
+]
 classifiers = [  # pragma: alphabetize
   "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent",
@@ -45,6 +48,7 @@ dev = [  # pragma: alphabetize
   "coverage",
   "pre-commit",
   "pytest",
+  "time-machine",
   "tox",
   "tox-uv",
   "uv",

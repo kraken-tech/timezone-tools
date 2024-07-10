@@ -2,9 +2,9 @@ repos:
 -   repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.5.1
     hooks:
+    -   id: ruff-format
     -   id: ruff
         args: [--fix, --show-fixes]
-    -   id: ruff-format
 -   repo: https://github.com/samueljsb/sort-lines
     rev: v0.3.0
     hooks:
@@ -29,3 +29,4 @@ repos:
     rev: v1.10.1
     hooks:
     -   id: mypy
+        additional_dependencies: [pytest, types-python-dateutil]
