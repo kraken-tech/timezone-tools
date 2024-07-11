@@ -39,7 +39,7 @@ jobs:
       run: |
         [ "v${{ steps.package_version.outputs.version }}" = "${{ github.ref_name }}" ]
     - name: check changelog includes version
-      run: grep ${{ github.ref_name }} < CHANGELOG.md
+      run: grep '## \[${{ steps.package_version.outputs.version }}\]' < CHANGELOG.md
 
   publish:
     runs-on: ubuntu-24.04
