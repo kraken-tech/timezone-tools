@@ -100,3 +100,29 @@ edit `pyproject.toml` and then run the `uv pip compile`.
 
 Development dependency versions are upgraded automatically
 by [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates)
+
+## Publishing
+
+This package is built and uploaded to PyPI automatically
+by the `build_and_publish` workflow
+in GitHub Actions.
+This workflow will be run whenever a tag is pushed for a new version;
+the tag must start with `v`.
+
+To publish a new version of this package:
+
+1. Update the version in `pyproject.toml`.
+2. Check all changes have been recorded in [the changelog](./CHANGELOG.md).
+3. Add a heading for the new version,
+   including today's date.
+4. Commit the changes and open a PR.
+5. Tag the merge commit with the new version:
+
+   ```sh
+   git tag 'v0.0.0'
+   git push origin --tags
+   ```
+
+The `build_and_publish` workflow will verify
+that the tag, package version, and changelog
+all contain the same version number.
