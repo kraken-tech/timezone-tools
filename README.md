@@ -1,4 +1,4 @@
-# datetime-tools
+# timezone-tools
 
 Helpers for working with timezone-aware date-times.
 
@@ -28,7 +28,7 @@ Create an instance of the timezone converter
 by passing it an IANA time zone name.
 
 ```python
-from datetime_tools import TimezoneConverter
+from timezone_tools import TimezoneConverter
 
 paris_time = TimezoneConverter("Europe/Paris")
 ```
@@ -49,7 +49,7 @@ Create an instance of the clock
 by passing it an IANA time zone name.
 
 ```python
-from datetime_tools import Clock
+from timezone_tools import Clock
 
 paris_time = Clock("Europe/Paris")
 ```

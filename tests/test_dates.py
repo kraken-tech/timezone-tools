@@ -2,7 +2,7 @@ import datetime
 
 import pytest
 
-import datetime_tools
+import timezone_tools
 
 
 @pytest.mark.parametrize(
@@ -20,13 +20,13 @@ import datetime_tools
 def test_is_last_day_of_month(
     date: datetime.date, is_last_day_of_month: bool
 ) -> None:
-    assert datetime_tools.is_last_day_of_month(date) is is_last_day_of_month
+    assert timezone_tools.is_last_day_of_month(date) is is_last_day_of_month
 
 
 def test_is_last_day_of_month_requires_date() -> None:
     # See Note [datetimes are dates]
     with pytest.raises(TypeError):
-        datetime_tools.is_last_day_of_month(datetime.datetime(2024, 1, 1))
+        timezone_tools.is_last_day_of_month(datetime.datetime(2024, 1, 1))
 
 
 @pytest.mark.parametrize(
@@ -70,21 +70,21 @@ def test_latest_date_for_day(
     latest_date: datetime.date,
 ) -> None:
     assert (
-        datetime_tools.latest_date_for_day(period, day_of_month) == latest_date
+        timezone_tools.latest_date_for_day(period, day_of_month) == latest_date
     )
 
 
 def test_latest_date_for_day_not_found() -> None:
-    with pytest.raises(datetime_tools.DateNotFound):
-        datetime_tools.latest_date_for_day(
+    with pytest.raises(timezone_tools.DateNotFound):
+        timezone_tools.latest_date_for_day(
             (datetime.date(2024, 1, 1), datetime.date(2024, 1, 30)), 31
         )
 
 
 @pytest.mark.parametrize("day_of_month", (-1, 0, 32))
 def test_latest_date_for_day_invalid_day(day_of_month: int) -> None:
-    with pytest.raises(datetime_tools.DateNotFound):
-        datetime_tools.latest_date_for_day(
+    with pytest.raises(timezone_tools.DateNotFound):
+        timezone_tools.latest_date_for_day(
             (datetime.date(2024, 1, 1), datetime.date(2024, 1, 31)),
             day_of_month,
         )
@@ -93,7 +93,7 @@ def test_latest_date_for_day_invalid_day(day_of_month: int) -> None:
 def test_latest_date_for_day_invalid_range() -> None:
     """Check that the period must start before it ends."""
     with pytest.raises(ValueError):
-        datetime_tools.latest_date_for_day(
+        timezone_tools.latest_date_for_day(
             (datetime.date(2024, 1, 2), datetime.date(2024, 1, 1)), 1
         )
 
@@ -101,7 +101,7 @@ def test_latest_date_for_day_invalid_range() -> None:
 def test_latest_date_for_day_requires_dates() -> None:
     # See Note [datetimes are dates]
     with pytest.raises(TypeError):
-        datetime_tools.latest_date_for_day(
+        timezone_tools.latest_date_for_day(
             (datetime.datetime(2024, 1, 2), datetime.datetime(2024, 1, 1)), 1
         )
 
@@ -147,7 +147,7 @@ def test_closest_upcoming_match(
     closest_match: datetime.date,
 ) -> None:
     assert (
-        datetime_tools.closest_upcoming_match(
+        timezone_tools.closest_upcoming_match(
             preferred_day_of_month, after_date=after_date
         )
         == closest_match
@@ -159,7 +159,7 @@ def test_closest_upcoming_match_invalid_day(
     preferred_day_of_month: int,
 ) -> None:
     with pytest.raises(ValueError):
-        datetime_tools.closest_upcoming_match(
+        timezone_tools.closest_upcoming_match(
             preferred_day_of_month, after_date=datetime.date(2024, 1, 1)
         )
 
@@ -167,13 +167,13 @@ def test_closest_upcoming_match_invalid_day(
 def test_closest_upcoming_match_requires_date() -> None:
     # See Note [datetimes are dates]
     with pytest.raises(TypeError):
-        datetime_tools.closest_upcoming_match(
+        timezone_tools.closest_upcoming_match(
             1, after_date=datetime.datetime(2024, 1, 1)
         )
 
 
 def test_iter_dates() -> None:
-    iterator = datetime_tools.iter_dates(
+    iterator = timezone_tools.iter_dates(
         datetime.date(2024, 1, 1), datetime.date(2024, 1, 4)
     )
 
@@ -202,14 +202,14 @@ def test_iter_dates() -> None:
 def test_iter_dates_invalid_range(
     start: datetime.date, stop: datetime.date
 ) -> None:
-    iterator = datetime_tools.iter_dates(start, stop)
+    iterator = timezone_tools.iter_dates(start, stop)
     with pytest.raises(ValueError):
         next(iterator)
 
 
 def test_iter_dates_requires_dates() -> None:
     # See Note [datetimes are dates]
-    iterator = datetime_tools.iter_dates(
+    iterator = timezone_tools.iter_dates(
         datetime.datetime(2024, 1, 1), datetime.datetime(2024, 1, 4)
     )
     with pytest.raises(TypeError):
@@ -217,7 +217,7 @@ def test_iter_dates_requires_dates() -> None:
 
 
 def test_get_contiguous_periods() -> None:
-    assert datetime_tools.get_contiguous_periods(
+    assert timezone_tools.get_contiguous_periods(
         (
             # Jan 1 - Jan 3
             datetime.date(2024, 1, 1),
@@ -249,10 +249,10 @@ def test_get_contiguous_periods() -> None:
 
 
 def test_get_contiguous_periods_empty() -> None:
-    assert datetime_tools.get_contiguous_periods(()) == ()
+    assert timezone_tools.get_contiguous_periods(()) == ()
 
 
 def test_get_contiguous_periods_requires_dates() -> None:
     # See Note [datetimes are dates]
     with pytest.raises(TypeError):
-        datetime_tools.get_contiguous_periods((datetime.datetime(2024, 1, 1),))
+        timezone_tools.get_contiguous_periods((datetime.datetime(2024, 1, 1),))

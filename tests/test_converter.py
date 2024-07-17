@@ -5,7 +5,7 @@ from typing import Literal
 
 import pytest
 
-from datetime_tools import TimezoneConverter
+from timezone_tools import TimezoneConverter
 
 # Note [Use Europe/Paris for tests]
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
