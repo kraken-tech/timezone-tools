@@ -5,7 +5,7 @@ import zoneinfo
 import pytest
 import time_machine
 
-from datetime_tools import Clock
+from timezone_tools import Clock
 
 # See Note [Use Europe/Paris for tests]
 

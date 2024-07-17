@@ -17,7 +17,7 @@ where = ["src"]
 # -------
 
 [project]
-name = "datetime_tools"
+name = "timezone_tools"
 version = "0.1.0"
 description = "Tools for working with timezone-aware datetimes."
 license.file = "LICENSE"
@@ -39,8 +39,8 @@ classifiers = [  # pragma: alphabetize
 ]
 
 [project.urls]
-Source = "https://github.com/octoenergy/datetime-tools"
-Changelog = "https://github.com/octoenergy/datetime-tools/blob/main/CHANGELOG.md"
+Source = "https://github.com/octoenergy/timezone-tools"
+Changelog = "https://github.com/octoenergy/timezone-tools/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [  # pragma: alphabetize
@@ -81,7 +81,7 @@ select = [  # pragma: alphabetize
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["datetime_tools"]
+known-first-party = ["timezone_tools"]
 
 # Mypy
 # ----
@@ -115,7 +115,7 @@ xfail_strict = true
 
 [tool.coverage.run]
 source = [
-  "datetime_tools",
+  "timezone_tools",
   "tests",
 ]
 plugins = ["covdefaults"]
