@@ -39,8 +39,8 @@ classifiers = [  # pragma: alphabetize
 ]
 
 [project.urls]
-Source = "https://github.com/octoenergy/timezone-tools"
-Changelog = "https://github.com/octoenergy/timezone-tools/blob/main/CHANGELOG.md"
+Source = "https://github.com/kraken-tech/timezone-tools"
+Changelog = "https://github.com/kraken-tech/timezone-tools/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [  # pragma: alphabetize
