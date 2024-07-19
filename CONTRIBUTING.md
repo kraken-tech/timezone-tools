@@ -4,8 +4,10 @@
 
 ### Create a virtual environment
 
-Ensure one of the supported Pythons (see README) is installed
+Ensure one of the supported Pythons (see [`pyproject.toml`]) is installed
 and used by the `python3` executable:
+
+[`pyproject.toml`]: ./pyproject.toml
 
 ```sh
 python3 --version
