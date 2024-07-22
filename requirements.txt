@@ -44,7 +44,7 @@ pre-commit==3.7.1
     # via timezone-tools (pyproject.toml)
 pyproject-api==1.7.1
     # via tox
-pytest==8.2.2
+pytest==8.3.1
     # via timezone-tools (pyproject.toml)
 python-dateutil==2.9.0.post0
     # via
