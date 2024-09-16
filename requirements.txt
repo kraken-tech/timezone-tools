@@ -32,7 +32,7 @@ packaging==24.1
     #   pytest
     #   tox
     #   tox-uv
-platformdirs==4.2.2
+platformdirs==4.3.3
     # via
     #   tox
     #   virtualenv
