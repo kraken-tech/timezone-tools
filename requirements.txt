@@ -68,7 +68,7 @@ uv==0.4.10
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
-virtualenv==20.26.4
+virtualenv==20.26.5
     # via
     #   pre-commit
     #   tox
