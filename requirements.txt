@@ -16,7 +16,7 @@ coverage==7.6.1
     #   covdefaults
 distlib==0.3.8
     # via virtualenv
-filelock==3.16.0
+filelock==3.16.1
     # via
     #   tox
     #   virtualenv
