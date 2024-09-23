@@ -56,7 +56,7 @@ six==1.16.0
     # via python-dateutil
 time-machine==2.15.0
     # via timezone-tools (pyproject.toml)
-tox==4.18.1
+tox==4.20.0
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
