@@ -25,9 +25,9 @@ source venv/bin/activate
 You could also use [virtualenvwrapper], [direnv] or any similar tool
 to help manage your virtual environments.
 
-### Install the Python dependencies
+### Install the `timezone_tools` package and its dependencies
 
-To install all the development dependencies in your virtual environment,
+To install the `timezone_tools` package and all the development dependencies in your virtual environment,
 run:
 
 ```sh
@@ -36,8 +36,6 @@ make dev
 
 [direnv]: https://direnv.net
 [virtualenvwrapper]: https://virtualenvwrapper.readthedocs.io/
-
-The tools used to manage this project will be installed.
 
 ### Run the tests
 
@@ -48,10 +46,10 @@ tox
 ```
 
 Alternatively, if you want to run the tests directly in your virtual environment,
-you many run the tests with:
+you may run the tests with:
 
 ```sh
-PYTHONPATH=src python3 -m pytest
+python3 -m pytest
 ```
 
 ### Static analysis
