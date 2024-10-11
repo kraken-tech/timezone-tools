@@ -31,7 +31,7 @@ To install all the development dependencies in your virtual environment,
 run:
 
 ```sh
-python3 -m pip install -r requirements.txt
+make dev
 ```
 
 [direnv]: https://direnv.net
