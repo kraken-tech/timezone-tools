@@ -60,7 +60,7 @@ tox==4.21.2
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
-tox-uv==1.13.0
+tox-uv==1.15.0
     # via timezone-tools (pyproject.toml)
 typing-extensions==4.12.2
     # via timezone-tools (pyproject.toml)
