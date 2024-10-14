@@ -14,7 +14,7 @@ coverage==7.6.1
     # via
     #   timezone-tools (pyproject.toml)
     #   covdefaults
-distlib==0.3.8
+distlib==0.3.9
     # via virtualenv
 filelock==3.16.1
     # via
