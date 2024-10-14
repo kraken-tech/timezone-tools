@@ -40,7 +40,7 @@ pluggy==1.5.0
     # via
     #   pytest
     #   tox
-pre-commit==4.0.0
+pre-commit==4.0.1
     # via timezone-tools (pyproject.toml)
 pyproject-api==1.8.0
     # via tox
