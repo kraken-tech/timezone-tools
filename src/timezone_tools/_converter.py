@@ -241,11 +241,12 @@ class TimezoneConverter:
         return self.midnight(self.day_after(when))
 
     def start_of_month(
-        self, datetime: datetime_.datetime
+        self, datetime: datetime_.datetime | datetime_.date
     ) -> datetime_.datetime:
         """Find the moment of the start of this month in this timezone.
 
         This will be midnight on the first day of the month.
+        Although the argument is called 'datetime', it can also be a date.
 
         Raises:
             NaiveDatetime: The datetime is naive, so we do not know which
@@ -254,10 +255,13 @@ class TimezoneConverter:
         """
         return self.midnight(self.first_day_of_month(datetime))
 
-    def end_of_month(self, datetime: datetime_.datetime) -> datetime_.datetime:
+    def end_of_month(
+            self, datetime: datetime_.datetime | datetime_.date
+    ) -> datetime_.datetime:
         """Find the moment of the end of this month in this timezone.
 
         This will be midnight on the first day of the following month.
+        Although the argument is called 'datetime', it can also be a date.
 
         Raises:
             NaiveDatetime: The datetime is naive, so we do not know which
@@ -269,7 +273,7 @@ class TimezoneConverter:
         )
 
     def first_day_of_month(
-        self, datetime: datetime_.datetime
+        self, datetime: datetime_.datetime | datetime_.date
     ) -> datetime_.date:
         """Find the date of the first day of this month in this timezone.
 
@@ -278,10 +282,11 @@ class TimezoneConverter:
                 timezone to localize from. Use `make_aware` to make a naive
                 datetime timezone-aware.
         """
+        datetime = self.midnight(datetime)
         return self.date(datetime).replace(day=1)
 
     def last_day_of_month(
-        self, datetime: datetime_.datetime
+        self, datetime: datetime_.datetime | datetime_.date
     ) -> datetime_.date:
         """Find the date of the last day of this month in this timezone.
 
