@@ -526,18 +526,22 @@ def test_next_midnight_requires_aware_datetime() -> None:
             datetime.datetime(
                 2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
             ),
-            id="same timezone",
+            id="datetime, same timezone",
         ),
         pytest.param(
             # June in London; July in Paris
             datetime.datetime(
                 2024, 6, 30, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
             ),
-            id="different timezone",
+            id="datetime, different timezone",
+        ),
+        pytest.param(
+            datetime.date(2024, 7, 9),
+            id="date",
         ),
     ),
 )
-def test_start_of_month(when: datetime.datetime) -> None:
+def test_start_of_month(when: datetime.datetime | datetime.date) -> None:
     paris_time = TimezoneConverter("Europe/Paris")
 
     assert paris_time.start_of_month(when) == datetime.datetime(
@@ -561,18 +565,22 @@ def test_start_of_month_requires_aware_datetime() -> None:
             datetime.datetime(
                 2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
             ),
-            id="same timezone",
+            id="datetime, same timezone",
         ),
         pytest.param(
             # June in London; July in Paris
             datetime.datetime(
                 2024, 6, 30, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
             ),
-            id="different timezone",
+            id="datetime, different timezone",
+        ),
+        pytest.param(
+            datetime.date(2024, 7, 9),
+            id="date",
         ),
     ),
 )
-def test_end_of_month(when: datetime.datetime) -> None:
+def test_end_of_month(when: datetime.datetime | datetime.date) -> None:
     paris_time = TimezoneConverter("Europe/Paris")
 
     assert paris_time.end_of_month(when) == datetime.datetime(
@@ -596,18 +604,22 @@ def test_end_of_month_requires_aware_datetime() -> None:
             datetime.datetime(
                 2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
             ),
-            id="same timezone",
+            id="datetime, same timezone",
         ),
         pytest.param(
             # June in London; July in Paris
             datetime.datetime(
                 2024, 6, 30, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
             ),
-            id="different timezone",
+            id="datetime, different timezone",
+        ),
+        pytest.param(
+            datetime.date(2024, 7, 9),
+            id="date",
         ),
     ),
 )
-def test_first_day_of_month(when: datetime.datetime) -> None:
+def test_first_day_of_month(when: datetime.datetime | datetime.date) -> None:
     paris_time = TimezoneConverter("Europe/Paris")
 
     assert paris_time.first_day_of_month(when) == datetime.date(2024, 7, 1)
@@ -629,18 +641,22 @@ def test_first_day_of_month_requires_aware_datetime() -> None:
             datetime.datetime(
                 2024, 7, 9, 12, 45, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
             ),
-            id="same timezone",
+            id="datetime, same timezone",
         ),
         pytest.param(
             # June in London; July in Paris
             datetime.datetime(
                 2024, 6, 30, 23, 30, tzinfo=zoneinfo.ZoneInfo("Europe/London")
             ),
-            id="different timezone",
+            id="datetime, different timezone",
+        ),
+        pytest.param(
+            datetime.date(2024, 7, 9),
+            id="date,",
         ),
     ),
 )
-def test_last_day_of_month(when: datetime.datetime) -> None:
+def test_last_day_of_month(when: datetime.datetime | datetime.date) -> None:
     paris_time = TimezoneConverter("Europe/Paris")
 
     assert paris_time.last_day_of_month(when) == datetime.date(2024, 7, 31)
