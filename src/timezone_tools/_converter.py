@@ -256,7 +256,7 @@ class TimezoneConverter:
         return self.midnight(self.first_day_of_month(datetime))
 
     def end_of_month(
-            self, datetime: datetime_.datetime | datetime_.date
+        self, datetime: datetime_.datetime | datetime_.date
     ) -> datetime_.datetime:
         """Find the moment of the end of this month in this timezone.
 
