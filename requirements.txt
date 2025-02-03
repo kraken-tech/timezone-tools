@@ -42,7 +42,7 @@ pluggy==1.5.0
     #   tox
 pre-commit==4.1.0
     # via timezone-tools (pyproject.toml)
-pyproject-api==1.8.0
+pyproject-api==1.9.0
     # via tox
 pytest==8.3.4
     # via timezone-tools (pyproject.toml)
