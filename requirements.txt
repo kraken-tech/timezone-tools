@@ -10,7 +10,7 @@ colorama==0.4.6
     # via tox
 covdefaults==2.3.0
     # via timezone-tools (pyproject.toml)
-coverage==7.6.10
+coverage==7.6.11
     # via
     #   timezone-tools (pyproject.toml)
     #   covdefaults
