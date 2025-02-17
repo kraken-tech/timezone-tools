@@ -10,7 +10,7 @@ colorama==0.4.6
     # via tox
 covdefaults==2.3.0
     # via timezone-tools (pyproject.toml)
-coverage==7.6.11
+coverage==7.6.12
     # via
     #   timezone-tools (pyproject.toml)
     #   covdefaults
@@ -60,11 +60,11 @@ tox==4.24.1
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
-tox-uv==1.23.0
+tox-uv==1.23.2
     # via timezone-tools (pyproject.toml)
 typing-extensions==4.12.2
     # via timezone-tools (pyproject.toml)
-uv==0.5.30
+uv==0.6.0
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
