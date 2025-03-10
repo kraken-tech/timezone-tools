@@ -20,7 +20,7 @@ filelock==3.17.0
     # via
     #   tox
     #   virtualenv
-identify==2.6.8
+identify==2.6.9
     # via pre-commit
 iniconfig==2.0.0
     # via pytest
@@ -56,7 +56,7 @@ six==1.17.0
     # via python-dateutil
 time-machine==2.16.0
     # via timezone-tools (pyproject.toml)
-tox==4.24.1
+tox==4.24.2
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
@@ -64,11 +64,11 @@ tox-uv==1.25.0
     # via timezone-tools (pyproject.toml)
 typing-extensions==4.12.2
     # via timezone-tools (pyproject.toml)
-uv==0.6.3
+uv==0.6.5
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
-virtualenv==20.29.2
+virtualenv==20.29.3
     # via
     #   pre-commit
     #   tox
