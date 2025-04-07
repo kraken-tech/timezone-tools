@@ -62,13 +62,13 @@ tox==4.25.0
     #   tox-uv
 tox-uv==1.25.0
     # via timezone-tools (pyproject.toml)
-typing-extensions==4.12.2
+typing-extensions==4.13.1
     # via timezone-tools (pyproject.toml)
-uv==0.6.11
+uv==0.6.12
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
-virtualenv==20.29.3
+virtualenv==20.30.0
     # via
     #   pre-commit
     #   tox
