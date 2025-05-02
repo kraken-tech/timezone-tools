@@ -2,7 +2,7 @@
 # ---------
 
 [build-system]
-requires = ["setuptools>=67.0"]
+requires = ["setuptools>=77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
@@ -20,7 +20,8 @@ where = ["src"]
 name = "timezone_tools"
 version = "0.1.0"
 description = "Tools for working with timezone-aware datetimes."
-license.file = "LICENSE"
+license = "MIT"
+license-files = ["LICENSE"]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -28,7 +29,6 @@ dependencies = [
   "typing_extensions",
 ]
 classifiers = [  # pragma: alphabetize
-  "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3",
