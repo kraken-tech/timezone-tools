@@ -32,7 +32,7 @@ packaging==25.0
     #   pytest
     #   tox
     #   tox-uv
-platformdirs==4.3.7
+platformdirs==4.3.8
     # via
     #   tox
     #   virtualenv
@@ -64,11 +64,11 @@ tox-uv==1.25.0
     # via timezone-tools (pyproject.toml)
 typing-extensions==4.13.2
     # via timezone-tools (pyproject.toml)
-uv==0.7.2
+uv==0.7.3
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
-virtualenv==20.30.0
+virtualenv==20.31.2
     # via
     #   pre-commit
     #   tox
