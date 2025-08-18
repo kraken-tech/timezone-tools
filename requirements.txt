@@ -10,13 +10,13 @@ colorama==0.4.6
     # via tox
 covdefaults==2.3.0
     # via timezone-tools (pyproject.toml)
-coverage==7.10.3
+coverage==7.10.4
     # via
     #   timezone-tools (pyproject.toml)
     #   covdefaults
 distlib==0.4.0
     # via virtualenv
-filelock==3.18.0
+filelock==3.19.1
     # via
     #   tox
     #   virtualenv
@@ -62,15 +62,15 @@ tox==4.28.4
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
-tox-uv==1.27.0
+tox-uv==1.28.0
     # via timezone-tools (pyproject.toml)
 typing-extensions==4.14.1
     # via timezone-tools (pyproject.toml)
-uv==0.8.8
+uv==0.8.11
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
-virtualenv==20.33.1
+virtualenv==20.34.0
     # via
     #   pre-commit
     #   tox
