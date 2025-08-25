@@ -10,7 +10,7 @@ colorama==0.4.6
     # via tox
 covdefaults==2.3.0
     # via timezone-tools (pyproject.toml)
-coverage==7.10.4
+coverage==7.10.5
     # via
     #   timezone-tools (pyproject.toml)
     #   covdefaults
@@ -56,7 +56,7 @@ pyyaml==6.0.2
     # via pre-commit
 six==1.17.0
     # via python-dateutil
-time-machine==2.17.0
+time-machine==2.19.0
     # via timezone-tools (pyproject.toml)
 tox==4.28.4
     # via
@@ -66,7 +66,7 @@ tox-uv==1.28.0
     # via timezone-tools (pyproject.toml)
 typing-extensions==4.14.1
     # via timezone-tools (pyproject.toml)
-uv==0.8.11
+uv==0.8.13
     # via
     #   timezone-tools (pyproject.toml)
     #   tox-uv
