@@ -20,6 +20,9 @@ where = ["src"]
 name = "timezone_tools"
 version = "0.1.0.post1"
 description = "Tools for working with timezone-aware datetimes."
+authors = [
+  {name = "Samuel Searles-Bryant", email = "sam@samueljsb.co.uk"},
+]
 license = "BSD-3-Clause"
 license-files = ["LICENSE"]
 readme = "README.md"
