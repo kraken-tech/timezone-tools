@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- This project has always been released under the BSD 3-clause license,
+  but the project metadata incorrectly listed the `MIT` SPDX license expression.
+  That has been corrected to `BSD-3-Clause`.
+
 ## [0.1.0.post1] - 2025-05-02
 
 This release updates the package metadata to reflect:
