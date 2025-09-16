@@ -54,11 +54,17 @@ test = [
   "covdefaults",
   "time-machine",
 ]
+mypy = [
+  "mypy",
+  "types-python-dateutil",
+  {include-group = "test"},
+]
 dev = [
   "pre-commit",
   "tox",
   "tox-uv",
   "uv",
+  {include-group = "mypy"},
   {include-group = "test"},
 ]
 
