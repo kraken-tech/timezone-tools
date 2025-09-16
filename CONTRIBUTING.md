@@ -31,7 +31,7 @@ To install all the development dependencies in your virtual environment,
 run:
 
 ```sh
-python3 -m pip install -r requirements.txt
+python3 -m pip install --group dev
 ```
 
 [direnv]: https://direnv.net
@@ -77,31 +77,6 @@ Package dependencies are declared in `pyproject.toml`.
   in the `[project]` section.
 - _development_ dependencies in the `dev` array
   in the `[project.optional-dependencies]` section.
-
-For local development,
-the dependencies declared in `pyproject.toml` are pinned to specific versions
-using the `requirements.txt` lock file.
-You should not manually edit the `requirements.txt` lock file.
-
-#### Adding a new dependency
-
-To install a new Python dependency
-add it to the appropriate section in `pyproject.toml`
-and then run:
-
-```sh
-uv pip compile --output-file=requirements.txt --group=dev pyproject.toml
-```
-
-#### Removing a dependency
-
-Removing Python dependencies works exactly the same way:
-edit `pyproject.toml` and then run the `uv pip compile`.
-
-#### Updating all Python packages
-
-Development dependency versions are upgraded automatically
-by [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates)
 
 ## Publishing
 
