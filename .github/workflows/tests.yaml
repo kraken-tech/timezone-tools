@@ -29,9 +29,8 @@ jobs:
         cache: 'pip'
         cache-dependency-path: |
           pyproject.toml
-          requirements.txt
           tox.ini
-    - run: pip install -c requirements.txt tox tox-uv
+    - run: pip install tox tox-uv
     - run: tox run-parallel --parallel-no-spinner
       env:
         FORCE_COLOR: "1"
