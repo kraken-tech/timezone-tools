@@ -47,16 +47,19 @@ classifiers = [  # pragma: alphabetize
 Source = "https://github.com/kraken-tech/timezone-tools"
 Changelog = "https://github.com/kraken-tech/timezone-tools/blob/main/CHANGELOG.md"
 
-[project.optional-dependencies]
-dev = [  # pragma: alphabetize
-  "covdefaults",
-  "coverage",
-  "pre-commit",
+[dependency-groups]
+test = [
   "pytest",
+  "coverage",
+  "covdefaults",
   "time-machine",
+]
+dev = [
+  "pre-commit",
   "tox",
   "tox-uv",
   "uv",
+  {include-group = "test"},
 ]
 
 

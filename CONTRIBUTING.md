@@ -90,7 +90,7 @@ add it to the appropriate section in `pyproject.toml`
 and then run:
 
 ```sh
-uv pip compile --output-file=requirements.txt --extra=dev pyproject.toml
+uv pip compile --output-file=requirements.txt --group=dev pyproject.toml
 ```
 
 #### Removing a dependency
